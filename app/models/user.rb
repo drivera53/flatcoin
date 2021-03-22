@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
-  has_many  :tweets
+  validates_uniqueness_of :email
+  validates_presence_of :first_name, :last_name, :email, :password
   has_secure_password
 
   def slug
-    username.downcase.gsub(" ","-")
+    first_name.downcase.gsub(" ","-")
   end
 
   def self.find_by_slug(slug)

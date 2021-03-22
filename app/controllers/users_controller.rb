@@ -1,50 +1,51 @@
 class UsersController < ApplicationController
     get '/users/:slug' do
       @user = User.find_by_slug(params[:slug])
-      erb :'users/show'
+      erb :'users/account'
     end
   
     get '/signup' do
-      if !logged_in?
-        erb :'users/create_user', locals: {message: "Please sign up before you sign in"}
+      if !Helpers.is_logged_in?(session)
+        erb :'users/signup', locals: {message: "Please sign up before you sign in"}
       else
-        redirect to '/tweets'
+        redirect to '/users/account'
       end
     end
   
     post '/signup' do
-      if params[:username] == "" || params[:email] == "" || params[:password] == ""
+      if params[:first_name] == "" || params[:last_name] == "" || params[:email] == "" || params[:password] == ""
         redirect to '/signup'
       else
-        @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
+        @user = User.new(:first_name => params[:first_name], :last_name => params[:last_name], :email => params[:email], :password => params[:password])
+        @user.balance = 10000 # Free '$10000' for signing up!
         @user.save
         session[:user_id] = @user.id
-        redirect to '/tweets'
+        redirect to '/users/account'
       end
     end
   
     get '/login' do
-      if !logged_in?
+      if !Helpers.is_logged_in?(session)
         erb :'users/login'
       else
-        redirect to '/tweets'
+        redirect to '/users/account'
       end
     end
   
     post '/login' do
-      user = User.find_by(:username => params[:username])
+      user = User.find_by(:email => params[:email])
       if user && user.authenticate(params[:password])
         session[:user_id] = user.id
-        redirect to "/tweets"
+        redirect to '/users/account'
       else
         redirect to '/signup'
       end
     end
   
     get '/logout' do
-      if logged_in?
+      if Helpers.is_logged_in?(session)
         session.destroy
-        redirect to '/login'
+        redirect to '/'
       else
         redirect to '/'
       end

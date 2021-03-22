@@ -1,16 +1,16 @@
-<h2>Welcome to Fwitter!</h2>
-<p>Please sign in or signup below:</p>
-
 <nav>
-  <% if logged_in? %>
+  <% if Helpers.is_logged_in?(session) %>
 
     <a href="/tweets/new"> Create Tweet </a>
     <a href="/logout"> Log Out </a>
-    <p>Welcome, <%=current_user.username %></p>
+    <p>Welcome, <%=Helpers.current_user(session).first_name %></p>
 
   <% else %>
-    <a href="/signup">Sign Up</a>
+    <h2>Trade Cryptocurrencies. Make Money!</h2>
+    <p>Build your portfolio and react to the markets in real time. Compete against your friends or coworkers to earn your spot at the top of the leaderboards.</p>
+    <h2>Sign up NOW and earn $10000 Flatcoins Instantly!</h2>
     <a href="/login"> Sign In </a>
+    <a href="/signup">Sign Up</a>
   <%end %>
 
 </nav>
