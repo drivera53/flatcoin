@@ -1,5 +1,9 @@
 ENV['SINATRA_ENV'] ||= "development"
 
+require 'net/http'
+require 'open-uri'
+require 'json'
+require 'tty-prompt'
 require 'bundler/setup'
 Bundler.require(:default, ENV['SINATRA_ENV'])
 

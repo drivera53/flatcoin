@@ -1,0 +1,13 @@
+<% if logged_in? %>
+    <% Api.new.get_top_20_cryptocurrencies %>
+    <form action='/trade/new_trade' method="post">
+        <label for="coin_id">Choose a Cryptocurrency to get started:</label>
+        <br>
+        <select name="coin_id" id="coin_id">
+            <% Cryptocurrency.all.each do |cryptocurrency| %>
+                <option value="<%= cryptocurrency.id %>"><%= cryptocurrency.name %> $<%= cryptocurrency.current_price %></option>
+            <% end %>
+        </select>
+        <input type="submit" name="submit" id="submit" value="Trade">
+    </form>
+<% end %>

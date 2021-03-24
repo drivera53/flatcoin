@@ -1,16 +1,32 @@
 <nav>
-  <% if Helpers.is_logged_in?(session) %>
+  <% if logged_in? %>
 
-    <a href="/tweets/new"> Create Tweet </a>
-    <a href="/logout"> Log Out </a>
-    <p>Welcome, <%=Helpers.current_user(session).first_name %></p>
+    <h4>Welcome, <%=current_user.first_name %></h4>
+    <h3>Buying Power: <%=current_user.balance %> FlatCoins</h3>
+    <a class="btn btn-primary" href="/trade" role="button">Trade NOW</a>
 
   <% else %>
     <h2>Trade Cryptocurrencies. Make Money!</h2>
     <p>Build your portfolio and react to the markets in real time. Compete against your friends or coworkers to earn your spot at the top of the leaderboards.</p>
     <h2>Sign up NOW and earn $10000 Flatcoins Instantly!</h2>
-    <a href="/login"> Sign In </a>
-    <a href="/signup">Sign Up</a>
+    <a class="btn btn-primary" href="/signup" role="button">Sign Up NOW!</a>
   <%end %>
 
 </nav>
+
+<h2>Top 20 Cryptocurrency Prices by Market Cap</h2>
+<% Api.new.get_top_20_cryptocurrencies %>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Coin</th>
+    <th>Price</th>
+  </tr>
+  <% Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index| %>
+    <tr>
+    <td><%= index %></td>
+    <td><%= cryptocurrency.name %></td>
+    <td><%= cryptocurrency.current_price %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,16 @@
+<h4>Welcome, <%=current_user.first_name %></h4>
+<h2>Leaderboard</h2>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Balance</th>
+  </tr>
+    <% @users.each.with_index(1) do |user, index| %>
+    <td><%= index %></td>
+    <td><%= user.first_name %> <%= user.last_name %></td>
+    <td>$<%= user.balance %></td>
+  </tr>
+    <% end %>
+</table>

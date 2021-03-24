@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'sinatra'
 gem 'activerecord', '~> 6.0.0', :require => 'active_record'
@@ -11,6 +12,10 @@ gem 'shotgun'
 gem 'pry'
 gem 'bcrypt'
 gem "tux"
+gem 'net-http'
+gem 'open-uri'
+gem 'json'
+gem 'tty-prompt'
 
 group :test do
   gem 'capybara'

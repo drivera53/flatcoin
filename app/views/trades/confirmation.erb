@@ -1,0 +1,4 @@
+<h2>Way to go! <%=current_user.first_name %>,</h2>
+<h3>Your market order to buy <%= @trade.quantity %> share(s) of <%= @trade.coin_name %> was executed at an average price of <%= @trade.current_price %> FlatCoins.</h3>
+<h3>Your new Buying Power after executing this order is: <%=current_user.balance%> FlatCoins</h3>
+

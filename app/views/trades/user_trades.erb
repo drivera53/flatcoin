@@ -1,0 +1,22 @@
+<h4>Welcome, <%=current_user.first_name %></h4>
+<h2>Your trades</h2>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Filled Quantity</th>
+    <th>Total</th>
+    <th>Date</th>
+    <th>Edit</th>
+    <th>Sell</th>
+  </tr>
+    <% @trades.each.with_index(1) do |trade, index| %>
+    <td><%= index %></td>
+    <td><%= trade.quantity %> <%= trade.coin_name %> at $<%= trade.current_price %></td>
+    <td>$<%= trade.current_price.to_f * trade.quantity.to_i %> FlatCoins</td>
+    <td><%= trade.created_at %></td>
+    <td><a href="/trades/edit/<%= trade.id %>">Edit</a></td>
+    <td><a href="/trades/sell/<%= trade.id %>">Sell</a></td>
+  </tr>
+    <% end %>
+</table>

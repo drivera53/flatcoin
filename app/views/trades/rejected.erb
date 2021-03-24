@@ -1,0 +1,5 @@
+<h2>Sorry <%=current_user.first_name %>, but your order was rejected.</h2>
+<h3>Your market order to buy <%= @trade.quantity %> share(s) of <%= @trade.coin_name %> was about to be executed at an average price of <%= @trade.current_price %> FlatCoins.</h3>
+<h3>You don't have enough buying power for this order.</h3>
+<h3>Your current Buying Power: <%=current_user.balance%> FlatCoins</h3>
+<h3>Your Buying Power after executing this order: <%=@new_balance%> FlatCoins</h3>

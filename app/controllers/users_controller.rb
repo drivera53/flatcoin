@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
-    get '/users/:slug' do
-      @user = User.find_by_slug(params[:slug])
-      erb :'users/account'
+    get '/users/balance' do
+      #@user = User.find_by_slug(params[:slug])
+      erb :'users/balance'
     end
   
     get '/signup' do
-      if !Helpers.is_logged_in?(session)
+      if !logged_in?
         erb :'users/signup', locals: {message: "Please sign up before you sign in"}
       else
-        redirect to '/users/account'
+        redirect to '/'
       end
     end
   
@@ -20,15 +20,15 @@ class UsersController < ApplicationController
         @user.balance = 10000 # Free '$10000' for signing up!
         @user.save
         session[:user_id] = @user.id
-        redirect to '/users/account'
+        redirect to '/'
       end
     end
   
     get '/login' do
-      if !Helpers.is_logged_in?(session)
+      if !logged_in?
         erb :'users/login'
       else
-        redirect to '/users/account'
+        redirect to '/'
       end
     end
   
@@ -36,14 +36,14 @@ class UsersController < ApplicationController
       user = User.find_by(:email => params[:email])
       if user && user.authenticate(params[:password])
         session[:user_id] = user.id
-        redirect to '/users/account'
+        redirect to '/'
       else
         redirect to '/signup'
       end
     end
   
     get '/logout' do
-      if Helpers.is_logged_in?(session)
+      if logged_in?
         session.destroy
         redirect to '/'
       else

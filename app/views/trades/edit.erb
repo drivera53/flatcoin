@@ -1,0 +1,14 @@
+<h2>You wish! <%=current_user.first_name %>,</h2>
+<h3>In real life you cannot change or cancel any portion of the order that has been filled.</h3>
+<h3>Your market order to buy <%= @trade.quantity %> share(s) of <%= @trade.coin_name %> was executed at an average price of <%= @trade.current_price %> FlatCoins on <%= @trade.created_at %>.</h3>
+<h3>FlatCoin lets you EDIT a trade for learning purposes only!</h3>
+
+<h2> Edit Trade </h2>
+
+<form method="post" action="/trades/edit/<%=@trade.id%>">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+  <p>Cryptocurrency: <input type="text" name="coin_name" value="<%= @trade.coin_name %>"></p>
+  <p>Price: <input type="decimal" name="current_price" value="<%= @trade.current_price %>"></p>
+  <p>Quantity: <input type="integer" name="quantity" value="<%= @trade.quantity %>"></p>
+  <input type="submit" value="Submit">
+</form>

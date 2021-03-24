@@ -1,0 +1,6 @@
+<% if logged_in? %>
+    <h1>Welcome <%= current_user.first_name %></h1>
+    <h3>Portfolio Total Value: $</h3>
+    <h3>Buying Power: <%= current_user.balance %> FlatCoins</h3>
+    <a class="btn btn-primary" href="/trade" role="button">Trade NOW</a>
+<% end %>
