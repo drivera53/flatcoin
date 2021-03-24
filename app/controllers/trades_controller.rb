@@ -28,14 +28,18 @@ class TradesController < ApplicationController
     end
 
     post '/trade/status' do
-        @trade = current_user.trades.build(coin_name: params[:coin_name], current_price: params[:current_price], quantity: params[:quantity])
-        @new_balance = current_user.balance - (params[:quantity].to_i*params[:current_price].to_f)
-        if @new_balance > 0
-            current_user.update(balance: @new_balance)
-            @trade.save
-            erb :'trades/confirmation'
+        if params[:quantity].to_i > 0
+            @trade = current_user.trades.build(coin_name: params[:coin_name], current_price: params[:current_price], quantity: params[:quantity])
+            @new_balance = current_user.balance - (params[:quantity].to_i*params[:current_price].to_f)
+            if @new_balance > 0
+                current_user.update(balance: @new_balance)
+                @trade.save
+                erb :'trades/confirmation'
+            else
+                erb :'trades/rejected'
+            end
         else
-            erb :'trades/rejected'
+            redirect to '/'
         end
     end
 
@@ -48,22 +52,13 @@ class TradesController < ApplicationController
         end
     end
 
-    get '/trades/user' do
-        if logged_in?
-            @trades = current_user.trades.all
-            erb :'trades/user_trades'
-        else
-            redirect to '/'
-        end
-    end
-
     get '/trades/edit/:id' do
         if logged_in?
             @trade = Trade.find_by_id(params[:id])
             if @trade && @trade.user == current_user
                 erb :'trades/edit'
             else
-                redirect to '/trades/user'
+                redirect to '/users/balance'
             end
         else
             redirect to '/'
@@ -75,9 +70,9 @@ class TradesController < ApplicationController
             @trade = Trade.find_by_id(params[:id])
             if @trade && @trade.user == current_user
                 @trade.update(coin_name: params[:coin_name], current_price: params[:current_price], quantity: params[:quantity])
-                redirect to '/trades/user'
+                redirect to '/users/balance'
             else
-                redirect to '/trades/user'
+                redirect to '/users/balance'
             end
         else
             redirect to '/'
@@ -94,7 +89,7 @@ class TradesController < ApplicationController
                 @new_balance = current_user.balance + (@trade.quantity.to_i * @updated_coin.current_price.to_f)
                 erb :'trades/sell'
             else
-                redirect to '/trades/user'
+                redirect to '/users/balance'
             end
         else
             redirect to '/'
@@ -106,10 +101,10 @@ class TradesController < ApplicationController
         if logged_in?
           @trade = Trade.find_by_id(params[:id])
           if @trade && @trade.user == current_user
-            current_user.update(balance: @new_balance)
+            current_user.update(balance: params[:new_balance])
             @trade.delete
           end
-          redirect to '/trades/user'
+          redirect to '/users/balance'
         else
           redirect to '/'
         end

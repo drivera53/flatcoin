@@ -1,4 +1,4 @@
-<h2>Sell! <%=current_user.first_name %>,</h2>
+<h2><%=current_user.first_name %>,</h2>
 <h3>You bought <%= @trade.quantity %> share(s) of <%= @trade.coin_name %> at an average price of <%= @trade.current_price %> FlatCoins on <%= @trade.created_at %>.</h3>
 <h3><%=@updated_coin.name %> is currently trading at <%=@updated_coin.current_price %> FlatCoins. Do you want to sell your current position of <%= @trade.quantity %> share(s)?</h3>
 <h3>Your new Buying Power will be <%=@new_balance%> FlatCoins.</h3>

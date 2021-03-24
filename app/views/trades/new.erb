@@ -1,22 +1,16 @@
 <img src="<%= @coin.image %>" alt="<%= @coin.name %>" width="150" height="150">
 <br>
 <h3><p><%= @coin.name.upcase %></p></h3>
-<br>
-<h3>Current Price: $<%= @coin.current_price %></h3>
-<br>
-<p>Price Change  1 Hour: <%= @coin.price_change_percentage_1h_in_currency %>%</p>
-<br>
-<p>24 Hour High: $<%= @coin.high_24h %></p>
-<br>
-<p>24 Hour Low: $<%= @coin.low_24h %></p>
-<br>
-<p>Trading Volume 24 Hours: $<%= @coin.total_volume %></p>
-<br>
-<p>Market Cap: $<%= @coin.market_cap %></p>
-<br>
-<p>Market Cap Rank: #<%= @coin.market_cap_rank %></p>
-<br>
-<p>Circulating Supply: $<%= @coin.circulating_supply %></p>
+<ul class="list-group">
+  <h3><li class="list-group-item">Current Price: <%= @coin.current_price %> FlatCoins</li></h3>
+  <li class="list-group-item">Price Change  1 Hour: <%= @coin.price_change_percentage_1h_in_currency.round(3) %>%</li>
+  <li class="list-group-item">24 Hour High: $<%= @coin.high_24h %></li>
+  <li class="list-group-item">24 Hour Low: $<%= @coin.low_24h %></li>
+  <li class="list-group-item">Trading Volume 24 Hours: $<%= @coin.total_volume %></li>
+  <li class="list-group-item">Market Cap: $<%= @coin.market_cap %></li>
+  <li class="list-group-item">Market Cap Rank: #<%= @coin.market_cap_rank %></li>
+  <li class="list-group-item">Circulating Supply: $<%= @coin.circulating_supply %></li>
+</ul>
 <% if logged_in? %>
     <h3>Your buying Power: <%=current_user.balance %> FlatCoins</h3>
     <form action='/trade/status' method="post">
@@ -24,6 +18,6 @@
         <input type="integer" id="quantity" name="quantity"><br>
         <input type="hidden" value="<%=@coin.name%>" name="coin_name" >
         <input type="hidden" value="<%=@coin.current_price%>" name="current_price" >
-        <input type="submit" value="Buy">
+        <input type="submit" value="Buy" >
     </form>
 <% end %>

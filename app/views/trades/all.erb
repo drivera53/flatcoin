@@ -1,7 +1,7 @@
 <h4>Welcome, <%=current_user.first_name %></h4>
 <h2>All trades</h2>
 
-<table>
+<table class="table table-bordered border-primary">
   <tr>
     <th>#</th>
     <th>Filled Quantity</th>
@@ -9,10 +9,11 @@
     <th>Trader</th>
     <th>Date</th>
   </tr>
+  <tr>
     <% @trades.each.with_index(1) do |trade, index| %>
     <td><%= index %></td>
-    <td><%= trade.quantity %> <%= trade.coin_name %> at $<%= trade.current_price %></td>
-    <td>$<%= trade.current_price.to_f * trade.quantity.to_i %> FlatCoins</td>
+    <td><%= trade.quantity %> <%= trade.coin_name %> coin(s) at <%= trade.current_price %> FlatCoins each</td>
+    <td><%= (trade.current_price.to_f * trade.quantity.to_i).round(2) %> FlatCoins</td>
     <td><%= trade.user.first_name %> <%= trade.user.last_name %></td>
     <td><%= trade.created_at %></td>
   </tr>

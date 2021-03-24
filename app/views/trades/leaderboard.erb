@@ -1,16 +1,61 @@
+<% Api.new.get_top_20_cryptocurrencies %>
 <h4>Welcome, <%=current_user.first_name %></h4>
 <h2>Leaderboard</h2>
-
-<table>
+<table class="table table-bordered border-primary" id="myTable">
   <tr>
-    <th>#</th>
     <th>Name</th>
-    <th>Balance</th>
+    <th>Portfolio Total Value in USD:</th>
   </tr>
     <% @users.each.with_index(1) do |user, index| %>
-    <td><%= index %></td>
-    <td><%= user.first_name %> <%= user.last_name %></td>
-    <td>$<%= user.balance %></td>
+      <% total_portfolio = user.balance %>
+      <td><%= user.first_name %> <%= user.last_name %></td>
+      <% user.trades.each do |trade| %>
+        <% updated_coin = Cryptocurrency.find_by_name(trade.coin_name) %>
+        <% total_portfolio += (trade.quantity * updated_coin.current_price) %>
+      <% end %>
+      <td><%= total_portfolio.round(2) %></td>
   </tr>
     <% end %>
 </table>
+<p><button class="btn btn-primary" onclick="sortTable()" id="watchButton">Refresh</button></p>
+<script>
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[1];
+      y = rows[i + 1].getElementsByTagName("TD")[1];
+      //check if the two rows should switch place:
+      if (Number(x.innerHTML) < Number(y.innerHTML)) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+<script>
+window.onload=function(){
+  document.getElementById("watchButton").click();
+};
+</script>

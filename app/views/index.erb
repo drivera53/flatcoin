@@ -2,8 +2,7 @@
   <% if logged_in? %>
 
     <h4>Welcome, <%=current_user.first_name %></h4>
-    <h3>Buying Power: <%=current_user.balance %> FlatCoins</h3>
-    <a class="btn btn-primary" href="/trade" role="button">Trade NOW</a>
+    <h3>Your Buying Power: <%=current_user.balance %> FlatCoins</h3> <a class="btn btn-primary" href="/trade" role="button">Trade NOW</a>
 
   <% else %>
     <h2>Trade Cryptocurrencies. Make Money!</h2>
@@ -16,7 +15,7 @@
 
 <h2>Top 20 Cryptocurrency Prices by Market Cap</h2>
 <% Api.new.get_top_20_cryptocurrencies %>
-<table>
+<table class="table table-bordered border-primary">
   <tr>
     <th>#</th>
     <th>Coin</th>
@@ -25,8 +24,8 @@
   <% Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index| %>
     <tr>
     <td><%= index %></td>
-    <td><%= cryptocurrency.name %></td>
-    <td><%= cryptocurrency.current_price %></td>
+    <td><a href="/trade/<%= cryptocurrency.id %>"><%= cryptocurrency.name %></a></td>
+    <td><%= cryptocurrency.current_price %> FlatCoins</td>
     </tr>
   <% end %>
 </table>

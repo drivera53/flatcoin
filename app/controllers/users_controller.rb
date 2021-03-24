@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
     get '/users/balance' do
-      #@user = User.find_by_slug(params[:slug])
-      erb :'users/balance'
+      if logged_in?
+        @trades = current_user.trades.all
+        erb :'users/balance'
+      else
+        redirect to '/'
+      end
     end
   
     get '/signup' do

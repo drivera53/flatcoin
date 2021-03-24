@@ -1,6 +1,47 @@
 <% if logged_in? %>
     <h1>Welcome <%= current_user.first_name %></h1>
-    <h3>Portfolio Total Value: $</h3>
     <h3>Buying Power: <%= current_user.balance %> FlatCoins</h3>
+    <table class="table table-bordered border-primary">
+        <tr>
+            <th>#</th>
+            <th>Coin</th>
+            <th>Quantity</th>
+            <th>Bought at</th>
+            <th>Current Price</th>
+            <th>Total Current Value in USD</th>
+            <th>Date</th>
+            <th>Edit</th>
+            <th>Sell</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>FlatCoin</td>
+            <td><%= current_user.balance %></td>
+            <th></th>
+            <th>$1 US</th>
+            <th>$<%= current_user.balance %></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <% Api.new.get_top_20_cryptocurrencies %>
+        <% total_portfolio = current_user.balance %>
+        <tr>
+            <% @trades.each.with_index(2) do |trade, index| %>
+                <% updated_coin = Cryptocurrency.find_by_name(trade.coin_name) %>
+                <td><%= index %></td>
+                <td><%= trade.coin_name %></td>
+                <td><%= trade.quantity %></td>
+                <td>$<%= trade.current_price %> US</td>
+                <td>$<%= updated_coin.current_price %> US</td>
+                <th>$<%= (trade.quantity * updated_coin.current_price).round(2) %></th>
+                <td><%= trade.created_at %></td>
+                <td><a href="/trades/edit/<%= trade.id %>">Edit</a></td>
+                <td><a href="/trades/sell/<%= trade.id %>">Sell</a></td>
+                <% total_portfolio += (trade.quantity * updated_coin.current_price) %>
+        </tr>
+            <% end %>
+    </table>
+    <h3>Portfolio Total Value: $<%= total_portfolio.round(2) %></h3>
     <a class="btn btn-primary" href="/trade" role="button">Trade NOW</a>
 <% end %>
