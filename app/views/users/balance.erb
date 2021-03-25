@@ -16,10 +16,10 @@
         <tr>
             <td>1</td>
             <td>FlatCoin</td>
-            <td><%= current_user.balance %></td>
+            <td><%= current_user.balance.round(2) %></td>
             <th></th>
             <th>$1 US</th>
-            <th>$<%= current_user.balance %></th>
+            <th>$<%= current_user.balance.round(2) %></th>
             <th></th>
             <th></th>
             <th></th>
