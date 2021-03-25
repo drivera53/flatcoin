@@ -11,7 +11,7 @@ My current database holds ten accounts with trades, if you want to practice with
 ```ruby
 rake db:migrate SINATRA_ENV=development
 ``` 
-and then `shotgun` to start the server, you app will be running on `http://localhost:9393/` as default. 
+and then `shotgun` to start the server, FlatCoin app will be running on `http://localhost:9393/` as default. 
 ```ruby
 shotgun
 ```
@@ -24,11 +24,10 @@ You may also use my `seeds.rb` or make your own.
 rake db:seed
 ```
 
-
 # Usage
-Execute the bin file './bin/run'. 
-You will be prompted with a list of the top 20 cryptocurrencies in the world. You can then get detailed information of each of the 20 coins by typing its number.
-You can also get information from any other cryptocurrency by just typing its name. 
+After you run `shotgun` FlatCoin app will be running on `http://localhost:9393/`. Here you may signup or login using credencials from `seeds.rb`. The main page displays a list of the top 20 cryptocurrencies by market cap and you can start trading right away. Keep in mind that you should have enough Buying Power in order to execute an order. Balance displays a list of all your trades along with your portfolio value, here you can also sell or edit your trade.
+Lederboard displays a list of all users along with its properly sorted portfolio value.
+All trades displays a detailed list of all users' trades.   
 
 ## License
 [MIT](https://github.com/drivera53/flatcoin/blob/main/LICENSE)
