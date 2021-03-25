@@ -2,7 +2,7 @@
 Welcome to FlatCoin! This App was develop as a Flatiron School Sinatra project. I developed this app to help users practice building a cryptocurrency portfolio and react to the markets in real time using fake money (10000 free FlatCoins), they can also compete against their friends or coworkers to earn their spot at the top of the leaderboards.
 
 # Installation
-Fork this repository and Install all of the required gems:
+Fork this repository and Install all of the required gems: (If you run into issues try deleting `Gemfile.lock` and then `bundle install` again.)
 ```ruby
 bundle install
 ```
@@ -11,11 +11,11 @@ My current database holds ten accounts with trades, if you want to practice with
 ```ruby
 rake db:migrate SINATRA_ENV=development
 ``` 
-and then
+and then `shotgun` to start the server, you app will be running on `http://localhost:9393/` as default. 
 ```ruby
 shotgun
 ```
-If you want to start with a fresh new database you may delete `development.sqlite` and `schema.rb`; and then run:
+If you want to start with a fresh new database you may delete `development.sqlite` and `schema.rb`; then run:
 ```ruby
 rake db:migrate SINATRA_ENV=development
 ```
@@ -31,4 +31,4 @@ You will be prompted with a list of the top 20 cryptocurrencies in the world. Yo
 You can also get information from any other cryptocurrency by just typing its name. 
 
 ## License
-[MIT](https://github.com/drivera53/cli_cryptocurrency_data/blob/main/LICENSE)
+[MIT](https://github.com/drivera53/flatcoin/blob/main/LICENSE)
