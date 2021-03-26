@@ -13,7 +13,8 @@
 </ul>
 <% if logged_in? %>
     <h3>Your buying Power: <%=current_user.balance %> FlatCoins</h3>
-    <form action='/trade/status' method="post">
+    <h3>You can buy up to: <%=current_user.max_coins(@coin.current_price) %> <%= @coin.name %></h3>
+    <form action='/trades/status' method="post">
         <label>Quantity:</label><br>
         <input type="integer" id="quantity" name="quantity"><br>
         <input type="hidden" value="<%=@coin.name%>" name="coin_name" >

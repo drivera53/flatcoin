@@ -1,6 +1,15 @@
 class TradesController < ApplicationController
 
-    get '/trade' do
+    get '/trades' do
+        if logged_in?
+          @trades = Trade.all
+          erb :'trades/all'
+        else
+          redirect to '/'
+        end
+    end
+
+    get '/trades/new' do
         if logged_in?
           erb :'trades/pick'
         else
@@ -8,12 +17,7 @@ class TradesController < ApplicationController
         end
     end
 
-    post '/trade/new_trade' do
-        @coin_id = params[:coin_id] 
-        redirect to "/trade/#{@coin_id}"
-    end
-
-    get '/trade/:id' do
+    get '/trades/new/:id' do
         if logged_in?
           Api.new.get_top_20_cryptocurrencies 
           @coin = Cryptocurrency.find_by_id(params[:id])
@@ -27,7 +31,12 @@ class TradesController < ApplicationController
         end
     end
 
-    post '/trade/status' do
+    post '/trade/new_trade' do
+        @coin_id = params[:coin_id] 
+        redirect to "/trades/new/#{@coin_id}"
+    end
+
+    post '/trades/status' do
         if params[:quantity].to_i > 0
             @trade = current_user.trades.build(coin_name: params[:coin_name], current_price: params[:current_price], quantity: params[:quantity])
             @new_balance = current_user.balance - (params[:quantity].to_i*params[:current_price].to_f)
@@ -40,15 +49,6 @@ class TradesController < ApplicationController
             end
         else
             redirect to '/'
-        end
-    end
-
-    get '/trades' do
-        if logged_in?
-          @trades = Trade.all
-          erb :'trades/all'
-        else
-          redirect to '/'
         end
     end
 

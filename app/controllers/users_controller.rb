@@ -1,12 +1,4 @@
 class UsersController < ApplicationController
-    get '/users/balance' do
-      if logged_in?
-        @trades = current_user.trades.all
-        erb :'users/balance'
-      else
-        redirect to '/'
-      end
-    end
   
     get '/signup' do
       if !logged_in?
@@ -53,5 +45,18 @@ class UsersController < ApplicationController
       else
         redirect to '/'
       end
+    end
+
+    get '/users/balance' do
+      if logged_in?
+        @trades = current_user.trades.all
+        erb :'users/balance'
+      else
+        redirect to '/'
+      end
+    end
+
+    get '/users' do
+      redirect to '/leaderboard'
     end
 end
